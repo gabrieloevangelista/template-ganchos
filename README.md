@@ -31,7 +31,7 @@ Abra http://localhost:3000.
 - `components/TemplateStep.tsx` — a etapa de escolha de template (busca + grid),
   separada por ter lógica de filtro própria.
 - `app/api/generate/route.ts` — Route Handler que valida a requisição, monta o
-  mesmo prompt usado no protótipo e chama a API da Anthropic (`claude-opus-4-8`)
+  mesmo prompt usado no protótipo e chama a API da Anthropic (`claude-3-5-sonnet-latest`)
   no servidor — a chave de API nunca chega ao navegador.
 - `lib/templates.ts` — os 30 templates (usado tanto pela UI quanto pela rota de
   API).
