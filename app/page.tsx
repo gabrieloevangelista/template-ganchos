@@ -50,6 +50,7 @@ export default function Home() {
 
   const [userPlan, setUserPlan] = useState('free');
   const [totalGenerations, setTotalGenerations] = useState(0);
+  const [additionalCredits, setAdditionalCredits] = useState(0);
 
   useEffect(() => {
     // Get initial session
@@ -90,7 +91,7 @@ export default function Home() {
     try {
       const { data, error } = await supabase
         .from('user_openai_keys')
-        .select('openai_api_key, plan, total_generations')
+        .select('openai_api_key, plan, total_generations, additional_credits')
         .eq('id', userId)
         .single();
       if (data) {
@@ -98,6 +99,7 @@ export default function Home() {
         setTempOpenaiKey(data.openai_api_key || '');
         setUserPlan(data.plan || 'free');
         setTotalGenerations(data.total_generations || 0);
+        setAdditionalCredits(data.additional_credits || 0);
         return true;
       }
     } catch (e) {
@@ -496,8 +498,8 @@ export default function Home() {
           </div>
 
           {/* Section 1: OpenAI Key */}
-          <div style={{ marginBottom: '30px', paddingBottom: '25px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <h3 style={{ color: '#f3ece0', marginBottom: '10px', fontSize: '1.1rem' }}>Conectar OpenAI API Key</h3>
+          <div style={{ marginBottom: '30px', paddingBottom: '25px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+            <h3 style={{ color: '#1e1b18', marginBottom: '10px', fontSize: '1.1rem' }}>Conectar OpenAI API Key</h3>
             <p className="step-desc" style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
               Insira sua chave de API para usar seus próprios créditos. Se deixar em branco, usará a chave padrão do sistema.
             </p>
@@ -528,8 +530,8 @@ export default function Home() {
           </div>
 
           {/* Section 2: Active Plan & Stats */}
-          <div style={{ marginBottom: '30px', paddingBottom: '25px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <h3 style={{ color: '#f3ece0', marginBottom: '10px', fontSize: '1.1rem' }}>Assinatura Atual</h3>
+          <div style={{ marginBottom: '30px', paddingBottom: '25px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+            <h3 style={{ color: '#1e1b18', marginBottom: '10px', fontSize: '1.1rem' }}>Assinatura Atual</h3>
             <div style={{
               background: 'rgba(215, 161, 60, 0.04)',
               border: '1px solid rgba(215, 161, 60, 0.1)',
@@ -540,28 +542,30 @@ export default function Home() {
               gap: '12px'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.9rem', color: '#a89a86' }}>Plano Ativo:</span>
+                <span style={{ fontSize: '0.9rem', color: '#5c564c' }}>Plano Ativo:</span>
                 <strong style={{
                   color: '#d7a13c',
                   textTransform: 'uppercase',
                   fontSize: '0.95rem',
                   letterSpacing: '0.05em'
                 }}>
-                  {userPlan === 'plan_10' ? 'Bronze (10 usos)' : userPlan === 'plan_50' ? 'Prata (50 usos)' : userPlan === 'plan_unlimited' ? 'Ouro (Ilimitado)' : 'Gratuito (3 usos)'}
+                  {userPlan === 'plan_10' ? 'Bronze (10 usos)' : userPlan === 'plan_50' ? 'Prata (50 usos)' : userPlan === 'plan_unlimited' ? 'Ouro (200 usos)' : 'Gratuito (3 usos)'}
                 </strong>
               </div>
 
               {/* Progress Bar */}
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#8f8370', marginBottom: '6px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#7d7567', marginBottom: '6px' }}>
                   <span>Uso Consumido</span>
                   <span>
-                    {totalGenerations} / {userPlan === 'plan_10' ? '10' : userPlan === 'plan_50' ? '50' : userPlan === 'plan_unlimited' ? '∞' : '3'} gerações
+                    {totalGenerations} / {
+                      (userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : userPlan === 'plan_unlimited' ? 200 : 3) + additionalCredits
+                    } gerações {additionalCredits > 0 && `(${userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : userPlan === 'plan_unlimited' ? 200 : 3} plano + ${additionalCredits} extras)`}
                   </span>
                 </div>
-                <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: '100%', height: '6px', background: 'rgba(0,0,0,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{
-                    width: `${userPlan === 'plan_unlimited' ? 0 : Math.min(100, (totalGenerations / (userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : 3)) * 100)}%`,
+                    width: `${Math.min(100, (totalGenerations / ((userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : userPlan === 'plan_unlimited' ? 200 : 3) + additionalCredits)) * 100)}%`,
                     height: '100%',
                     background: '#d7a13c',
                     borderRadius: '3px'
@@ -572,14 +576,14 @@ export default function Home() {
           </div>
 
           {/* Section 3: Upgrade plans */}
-          <div>
-            <h3 style={{ color: '#f3ece0', marginBottom: '15px', fontSize: '1.1rem' }}>Fazer Upgrade</h3>
+          <div style={{ marginBottom: '30px', paddingBottom: '25px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+            <h3 style={{ color: '#1e1b18', marginBottom: '15px', fontSize: '1.1rem' }}>Fazer Upgrade de Plano</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '12px' }}>
               
               {/* Bronze */}
               <div style={{
-                background: userPlan === 'plan_10' ? 'rgba(215, 161, 60, 0.06)' : 'rgba(22, 19, 15, 0.3)',
-                border: userPlan === 'plan_10' ? '2px solid #d7a13c' : '1px solid rgba(255,255,255,0.06)',
+                background: userPlan === 'plan_10' ? 'rgba(215, 161, 60, 0.05)' : '#ffffff',
+                border: userPlan === 'plan_10' ? '2px solid #d7a13c' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'flex',
@@ -588,9 +592,9 @@ export default function Home() {
                 height: '180px'
               }}>
                 <div>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#f3ece0' }}>Bronze</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 19,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#8f8370' }}>/mês</span></div>
-                  <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#a89a86', listStyleType: 'circle' }}>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Bronze</h4>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 19,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
                     <li>10 gerações</li>
                     <li>Fins comerciais</li>
                   </ul>
@@ -607,8 +611,8 @@ export default function Home() {
 
               {/* Prata */}
               <div style={{
-                background: userPlan === 'plan_50' ? 'rgba(215, 161, 60, 0.06)' : 'rgba(22, 19, 15, 0.3)',
-                border: userPlan === 'plan_50' ? '2px solid #d7a13c' : '1px solid rgba(255,255,255,0.06)',
+                background: userPlan === 'plan_50' ? 'rgba(215, 161, 60, 0.05)' : '#ffffff',
+                border: userPlan === 'plan_50' ? '2px solid #d7a13c' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'flex',
@@ -617,9 +621,9 @@ export default function Home() {
                 height: '180px'
               }}>
                 <div>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#f3ece0' }}>Prata</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 39,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#8f8370' }}>/mês</span></div>
-                  <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#a89a86', listStyleType: 'circle' }}>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Prata</h4>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 39,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
                     <li>50 gerações</li>
                     <li>Fins comerciais</li>
                   </ul>
@@ -636,8 +640,8 @@ export default function Home() {
 
               {/* Ouro */}
               <div style={{
-                background: userPlan === 'plan_unlimited' ? 'rgba(215, 161, 60, 0.06)' : 'rgba(22, 19, 15, 0.3)',
-                border: userPlan === 'plan_unlimited' ? '2px solid #d7a13c' : '1px solid rgba(255,255,255,0.06)',
+                background: userPlan === 'plan_unlimited' ? 'rgba(215, 161, 60, 0.05)' : '#ffffff',
+                border: userPlan === 'plan_unlimited' ? '2px solid #d7a13c' : '1px solid rgba(0,0,0,0.08)',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'flex',
@@ -646,10 +650,10 @@ export default function Home() {
                 height: '180px'
               }}>
                 <div>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#f3ece0' }}>Ouro</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 49,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#8f8370' }}>/mês</span></div>
-                  <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#a89a86', listStyleType: 'circle' }}>
-                    <li>Uso Ilimitado</li>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Ouro</h4>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 49,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
+                    <li>200 gerações</li>
                     <li>Suporte VIP</li>
                   </ul>
                 </div>
@@ -663,6 +667,40 @@ export default function Home() {
                 </button>
               </div>
 
+            </div>
+          </div>
+
+          {/* Section 4: Créditos Adicionais */}
+          <div>
+            <h3 style={{ color: '#1e1b18', marginBottom: '10px', fontSize: '1.1rem' }}>Créditos Adicionais avulsos</h3>
+            <p className="step-desc" style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
+              Acabaram os usos do seu plano? Você pode comprar créditos extras que acumulam com o seu saldo e não expiram.
+            </p>
+            <div style={{
+              background: '#ffffff',
+              border: '1px solid rgba(215, 161, 60, 0.2)',
+              borderRadius: '12px',
+              padding: '18px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '15px',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.01)'
+            }}>
+              <div>
+                <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +50 Gerações</h4>
+                <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#5c564c' }}>Uso adicional avulso liberado de imediato</p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 15,00</span>
+                <button
+                  className="btn-primary btn-sm"
+                  onClick={() => handleSubscribe('extra_50')}
+                  style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+                >
+                  Comprar +50 usos
+                </button>
+              </div>
             </div>
           </div>
 

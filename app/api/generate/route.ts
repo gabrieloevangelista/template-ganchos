@@ -116,12 +116,13 @@ export async function POST(req: Request) {
 
   const { data: keyData } = await supabase
     .from('user_openai_keys')
-    .select('openai_api_key, plan, total_generations')
+    .select('openai_api_key, plan, total_generations, additional_credits')
     .eq('id', user.id)
     .single();
 
   const plan = keyData?.plan || 'free';
   const totalGenerations = keyData?.total_generations || 0;
+  const additionalCredits = keyData?.additional_credits || 0;
 
   // Enforce usage limits
   let limit = 3;
@@ -133,13 +134,15 @@ export async function POST(req: Request) {
     limit = 50;
     planName = 'Prata (50 usos)';
   } else if (plan === 'unlimited' || plan === 'plan_unlimited' || plan === 'diamond') {
-    limit = Infinity;
-    planName = 'Ouro (Ilimitado)';
+    limit = 200;
+    planName = 'Ouro (200 usos)';
   }
 
-  if (totalGenerations >= limit) {
+  const totalAllowed = limit + additionalCredits;
+
+  if (totalGenerations >= totalAllowed) {
     return NextResponse.json(
-      { error: `Você atingiu o limite do seu plano ${planName} (${limit} gerações). Assine um plano premium nas configurações para continuar.` },
+      { error: `Você atingiu o limite de gerações do seu plano ${planName} + créditos adicionais (${totalAllowed} gerações). Compre créditos adicionais ou faça upgrade de plano nas configurações para continuar.` },
       { status: 403 }
     );
   }
