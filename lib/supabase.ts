@@ -11,6 +11,8 @@ export const createClient = () => {
         getUser: async () => ({ data: { user: null } }),
         onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
         signOut: async () => {},
+        signUp: async () => ({ data: { user: null }, error: new Error('As variáveis de ambiente do Supabase não foram carregadas no cliente. Por favor, reinicie o servidor de desenvolvimento ou configure-as na Vercel.') }),
+        signInWithPassword: async () => ({ data: { user: null }, error: new Error('As variáveis de ambiente do Supabase não foram carregadas no cliente. Por favor, reinicie o servidor de desenvolvimento ou configure-as na Vercel.') }),
       },
       from: () => ({
         select: () => ({ eq: () => ({ single: () => ({ data: null }) }) }),
