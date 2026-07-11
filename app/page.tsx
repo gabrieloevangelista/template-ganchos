@@ -69,9 +69,9 @@ export default function Home() {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
-        const hasKey = await loadUserKey(currentUser.id);
+        await loadUserKey(currentUser.id);
         if (event === 'SIGNED_IN') {
-          setStep(hasKey ? 'nicho' : 'login');
+          setStep('nicho');
         }
       } else {
         setOpenaiKey('');
@@ -103,7 +103,12 @@ export default function Home() {
         return true;
       }
     } catch (e) {
-      console.error(e);
+      // Para novos usuários que não têm registro na tabela ainda, define os valores padrão
+      setOpenaiKey('');
+      setTempOpenaiKey('');
+      setUserPlan('free');
+      setTotalGenerations(0);
+      setAdditionalCredits(0);
     } finally {
       setLoadingUser(false);
     }
@@ -384,7 +389,7 @@ export default function Home() {
             Conte seu nicho, descreva seu público ideal, escolha um dos 30 ganchos validados do ebook — e receba 3
             variações de conteúdo prontas para gravar.
           </p>
-          <button className="btn-primary btn-lg" onClick={() => setStep(user ? (openaiKey ? 'nicho' : 'login') : 'login')}>
+          <button className="btn-primary btn-lg" onClick={() => setStep(user ? 'nicho' : 'login')}>
             Começar →
           </button>
         </div>
