@@ -35,6 +35,7 @@ export default function Home() {
   const [loadingUser, setLoadingUser] = useState(true);
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
+  const [authName, setAuthName] = useState('');
   const [authTab, setAuthTab] = useState<'login' | 'signup'>('login');
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
@@ -163,7 +164,15 @@ export default function Home() {
   }
 
   async function handleAuthSubmit() {
-    if (!authEmail.trim() || authPassword.length < 6) return;
+    if (!authEmail.trim() || authPassword.length < 6) {
+      setAuthError('Preencha um e-mail válido e uma senha com no mínimo 6 caracteres.');
+      return;
+    }
+    if (authTab === 'signup' && !authName.trim()) {
+      setAuthError('Por favor, informe seu nome para o cadastro.');
+      return;
+    }
+
     setAuthLoading(true);
     setAuthError('');
     try {
@@ -174,13 +183,25 @@ export default function Home() {
         });
         if (error) throw error;
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email: authEmail.trim(),
-          password: authPassword
+          password: authPassword,
+          options: {
+            data: {
+              name: authName.trim()
+            }
+          }
         });
         if (error) throw error;
-        alert('Cadastro realizado com sucesso! Se configurado, confirme seu e-mail ou faça login.');
-        setAuthTab('login');
+        
+        // Login automático (caso a sessão não venha pronta e a confirmação de email esteja desligada)
+        if (!data.session) {
+          const { error: signInError } = await supabase.auth.signInWithPassword({
+            email: authEmail.trim(),
+            password: authPassword
+          });
+          if (signInError) throw signInError;
+        }
       }
     } catch (err: any) {
       let msg = err.message || 'Erro na autenticação.';
@@ -427,6 +448,19 @@ export default function Home() {
           )}
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {authTab === 'signup' && (
+              <input
+                type="text"
+                className="field"
+                value={authName}
+                onChange={(e) => setAuthName(e.target.value)}
+                placeholder="Seu nome"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleAuthSubmit();
+                }}
+                autoFocus={authTab === 'signup'}
+              />
+            )}
             <input
               type="email"
               className="field"
@@ -434,11 +468,9 @@ export default function Home() {
               onChange={(e) => setAuthEmail(e.target.value)}
               placeholder="Endereço de e-mail"
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && authEmail.trim() && authPassword.length >= 6) {
-                  handleAuthSubmit();
-                }
+                if (e.key === 'Enter') handleAuthSubmit();
               }}
-              autoFocus
+              autoFocus={authTab === 'login'}
             />
             <div style={{ position: 'relative', width: '100%' }}>
               <input
@@ -448,9 +480,7 @@ export default function Home() {
                 onChange={(e) => setAuthPassword(e.target.value)}
                 placeholder="Sua senha (mínimo 6 caracteres)"
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && authEmail.trim() && authPassword.length >= 6) {
-                    handleAuthSubmit();
-                  }
+                  if (e.key === 'Enter') handleAuthSubmit();
                 }}
                 style={{ paddingRight: '75px' }}
               />
