@@ -53,7 +53,8 @@ export default function Home() {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase.auth.getUser().then((res: any) => {
+      const user = res.data?.user;
       setUser(user);
       if (user) {
         loadUserKey(user.id);
@@ -63,7 +64,7 @@ export default function Home() {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
@@ -227,20 +228,24 @@ export default function Home() {
   async function handleSubscribe(planId: string) {
     if (!user) return;
     try {
-      const { error } = await supabase
-        .from('user_openai_keys')
-        .upsert({
-          id: user.id,
-          plan: planId,
-          openai_api_key: openaiKey || null,
-          total_generations: totalGenerations || 0
-        });
-      if (error) throw error;
-      setUserPlan(planId);
-      alert('Plano assinado com sucesso!');
+      const res = await fetch('/api/checkout/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ planId })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Erro ao criar sessão de checkout.');
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('Nenhum link de pagamento retornado.');
+      }
     } catch (e: any) {
       console.error('Erro ao assinar plano:', e);
-      alert(e.message || 'Erro ao assinar plano.');
+      alert(e.message || 'Erro ao iniciar pagamento com AbacatePay.');
     }
   }
 
