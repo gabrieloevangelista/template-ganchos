@@ -206,7 +206,11 @@ export default function Home() {
     } catch (err: any) {
       let msg = err.message || 'Erro na autenticação.';
       if (msg === 'Invalid login credentials') {
-        msg = 'E-mail ou senha incorretos. Verifique suas credenciais ou crie uma conta.';
+        if (authTab === 'signup') {
+          msg = 'Este e-mail já está cadastrado. Vá para a aba "Entrar" para fazer login.';
+        } else {
+          msg = 'E-mail ou senha incorretos. Verifique suas credenciais ou crie uma conta.';
+        }
       } else if (msg === 'User already registered') {
         msg = 'Este endereço de e-mail já está em uso.';
       } else if (msg.includes('Email not confirmed')) {
