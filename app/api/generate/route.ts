@@ -39,7 +39,7 @@ function buildPrompt({ nicho, icp, template, cta }: { nicho: string; icp: string
     '- "gancho": a frase de abertura do vídeo, seguindo a estrutura do template, adaptada ao nicho/ICP (1 frase forte, pronta pra falar em vídeo).',
     '- "abertura": 1-2 frases que vêm logo após o gancho para reforçá-lo e prender a atenção nos primeiros segundos.',
     '- "desenvolvimento": 2-4 frases que desenvolvem o conteúdo prometido no gancho, aplicando a lógica do template ao nicho/ICP.',
-    '- "cta": 1 frase curta de fechamento que peça explicitamente a ação de "' + cta + '", de forma natural e coerente com o nicho (não use frases genéricas como "siga para mais dicas" — peça a ação específica).',
+    '- "cta": 1 frase curta de fechamento que peça explicitamente a ação de "' + cta + '", de forma natural e coerente com o nicho (não use frases genéricas como "siga para mais dicas", peça a ação específica).',
     '',
     'Responda APENAS com um JSON válido no formato exato:',
     '{"variations": [{"gancho":"...","abertura":"...","desenvolvimento":"...","cta":"..."},{"gancho":"...","abertura":"...","desenvolvimento":"...","cta":"..."},{"gancho":"...","abertura":"...","desenvolvimento":"...","cta":"..."}]}',

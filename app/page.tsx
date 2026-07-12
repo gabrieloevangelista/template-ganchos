@@ -168,7 +168,7 @@ export default function Home() {
       setErrorMsg(
         err instanceof Error
           ? err.message
-          : 'A geração falhou ou veio em um formato inesperado. Tente novamente — geralmente funciona na segunda tentativa.',
+          : 'A geração falhou ou veio em um formato inesperado. Tente novamente, geralmente funciona na segunda tentativa.',
       );
       setStep('error');
     }
@@ -425,8 +425,8 @@ export default function Home() {
             em conteúdo pronto pro seu nicho
           </h1>
           <p>
-            Conte seu nicho, descreva seu público ideal, escolha um dos 30 ganchos validados do ebook — e receba 3
-            variações de conteúdo prontas para gravar.
+            Conte seu nicho, descreva seu público ideal, escolha um dos 30 ganchos validados do ebook e receba 3
+            variações poderosas completas com texto visual e CTAs. Tudo em 5 segundos.
           </p>
           <button className="btn-primary btn-lg" onClick={() => setStep(user ? 'nicho' : 'login')}>
             Começar →
@@ -583,13 +583,13 @@ export default function Home() {
                   <span>Uso Consumido</span>
                   <span>
                     {totalGenerations} / {
-                      (userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : userPlan === 'plan_unlimited' ? 200 : 3) + additionalCredits
-                    } gerações {additionalCredits > 0 && `(${userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : userPlan === 'plan_unlimited' ? 200 : 3} plano + ${additionalCredits} extras)`}
+                      (userPlan === 'plan_10' ? 100 : userPlan === 'plan_50' ? 250 : userPlan === 'plan_unlimited' ? 500 : 3) + additionalCredits
+                    } gerações {additionalCredits > 0 && `(${userPlan === 'plan_10' ? 100 : userPlan === 'plan_50' ? 250 : userPlan === 'plan_unlimited' ? 500 : 3} plano + ${additionalCredits} extras)`}
                   </span>
                 </div>
                 <div style={{ width: '100%', height: '6px', background: 'rgba(0,0,0,0.06)', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{
-                    width: `${Math.min(100, (totalGenerations / ((userPlan === 'plan_10' ? 10 : userPlan === 'plan_50' ? 50 : userPlan === 'plan_unlimited' ? 200 : 3) + additionalCredits)) * 100)}%`,
+                    width: `${Math.min(100, (totalGenerations / ((userPlan === 'plan_10' ? 100 : userPlan === 'plan_50' ? 250 : userPlan === 'plan_unlimited' ? 500 : 3) + additionalCredits)) * 100)}%`,
                     height: '100%',
                     background: '#d7a13c',
                     borderRadius: '3px'
