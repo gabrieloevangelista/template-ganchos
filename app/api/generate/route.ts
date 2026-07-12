@@ -124,8 +124,24 @@ export async function POST(req: Request) {
   const totalGenerations = keyData?.total_generations || 0;
   const additionalCredits = keyData?.additional_credits || 0;
 
-  // Enforce usage limits
-  let limit = 3;
+  // Check usage limits
+  let isUsingFreeSlot = false;
+  if (plan === 'free') {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const { count } = await supabase
+      .from('generation_history')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .gte('created_at', startOfDay.toISOString());
+    
+    const dailyGenerations = count || 0;
+    if (dailyGenerations < 3) {
+      isUsingFreeSlot = true;
+    }
+  }
+
+  let limit = 0;
   let planName = 'Gratuito';
   if (plan === 'silver' || plan === 'plan_10') {
     limit = 50;
@@ -140,9 +156,12 @@ export async function POST(req: Request) {
 
   const totalAllowed = limit + additionalCredits;
 
-  if (totalGenerations >= totalAllowed) {
+  if (!isUsingFreeSlot && totalGenerations >= totalAllowed) {
+    const msg = plan === 'free' 
+      ? 'Você atingiu o limite de 3 usos diários gratuitos.' 
+      : `Você atingiu o limite do seu plano ${planName} + créditos adicionais (${totalAllowed} usos).`;
     return NextResponse.json(
-      { error: `Você atingiu o limite de gerações do seu plano ${planName} + créditos adicionais (${totalAllowed} gerações). Compre créditos adicionais ou faça upgrade de plano nas configurações para continuar.` },
+      { error: msg, code: 'LIMIT_REACHED' },
       { status: 403 }
     );
   }
@@ -188,16 +207,18 @@ export async function POST(req: Request) {
       console.error('Erro ao salvar histórico de geração:', historyError);
     }
 
-    // Incrementar contagem de geração
-    if (keyData) {
-      await supabase
-        .from('user_openai_keys')
-        .update({ total_generations: totalGenerations + 1 })
-        .eq('id', user.id);
-    } else {
-      await supabase
-        .from('user_openai_keys')
-        .insert({ id: user.id, plan: 'free', total_generations: 1 });
+    // Incrementar contagem de geração (se não for um slot gratuito diário)
+    if (!isUsingFreeSlot) {
+      if (keyData) {
+        await supabase
+          .from('user_openai_keys')
+          .update({ total_generations: totalGenerations + 1 })
+          .eq('id', user.id);
+      } else {
+        await supabase
+          .from('user_openai_keys')
+          .insert({ id: user.id, plan: 'free', total_generations: 1 });
+      }
     }
 
     return NextResponse.json({ variations });

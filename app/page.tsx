@@ -49,6 +49,9 @@ export default function Home() {
   const [history, setHistory] = useState<any[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
+  const [limitPopupOpen, setLimitPopupOpen] = useState(false);
+  const [limitPopupMessage, setLimitPopupMessage] = useState('');
+
   const [userPlan, setUserPlan] = useState('free');
   const [totalGenerations, setTotalGenerations] = useState(0);
   const [additionalCredits, setAdditionalCredits] = useState(0);
@@ -148,7 +151,15 @@ export default function Home() {
         body: JSON.stringify({ nicho, icp, templateId: selectedTemplateId, cta: selectedCta }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Falha na geração.');
+      if (!res.ok) {
+        if (data.code === 'LIMIT_REACHED') {
+          setLimitPopupMessage(data.error);
+          setLimitPopupOpen(true);
+          setStep('cta'); // Voltar para a tela anterior
+          return;
+        }
+        throw new Error(data.error || 'Falha na geração.');
+      }
       setVariations(data.variations);
       setCopiedIndex(null);
       setStep('results');
@@ -1051,6 +1062,30 @@ export default function Home() {
           </div>
         </div>
       )}
+      {limitPopupOpen && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '20px' }}>
+          <div style={{ background: '#ffffff', padding: '35px 30px', borderRadius: '16px', maxWidth: '420px', width: '100%', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '15px' }}>💎</div>
+            <h3 style={{ color: '#1e1b18', margin: '0 0 15px', fontSize: '1.35rem' }}>Atenção</h3>
+            <p style={{ color: '#5c564c', fontSize: '0.95rem', marginBottom: '30px', lineHeight: '1.5' }}>
+              {limitPopupMessage}<br/><br/>
+              Para continuar aproveitando o nosso gerador agora mesmo, você precisa adquirir créditos avulsos ou assinar um plano.
+            </p>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+              <button className="btn-secondary" onClick={() => setLimitPopupOpen(false)}>
+                Cancelar
+              </button>
+              <button className="btn-primary" onClick={() => {
+                setLimitPopupOpen(false);
+                setStep('login');
+              }}>
+                Ver Planos →
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
