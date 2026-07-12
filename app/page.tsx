@@ -336,7 +336,12 @@ export default function Home() {
   return (
     <div id="app">
       <div className="topbar">
-        <div className="brand" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div 
+          className="brand" 
+          onClick={() => setStep('intro')} 
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+          title="Voltar ao início"
+        >
           <img src="/logo.png" alt="Gerador de Ganchos" width={44} height={44} />
           <span className="brand-name">Gerador de Ganchos</span>
         </div>
@@ -820,10 +825,10 @@ export default function Home() {
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
                       <div>
-                        <span style={{ fontSize: '0.75rem', color: '#d7a13c', display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <span style={{ fontSize: '0.75rem', color: '#b9872a', fontWeight: 'bold', display: 'block', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           {templateName} · {item.cta}
                         </span>
-                        <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#f3ece0' }}>
+                        <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#1e1b18' }}>
                           Nicho: {item.nicho}
                         </h4>
                       </div>
@@ -849,8 +854,8 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <p style={{ margin: 0, fontSize: '0.85rem', color: '#a59e92', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-                      <strong>Público (ICP):</strong> {item.icp}
+                    <p style={{ margin: 0, fontSize: '0.85rem', color: '#5c564c', overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                      <strong style={{ color: '#1e1b18' }}>Público (ICP):</strong> {item.icp}
                     </p>
 
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '5px' }}>
