@@ -27,20 +27,22 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Metadata ausente no checkout.' }, { status: 400 });
       }
 
-      if (planId === 'extra_50') {
-        // Adiciona 50 créditos ao saldo do usuário
-        const { data, error } = await supabase.rpc('add_additional_credits', {
-          user_id: userId,
-          credits_to_add: 50,
-          secret_token: 'abacatepay_webhook_secret_token_2026'
-        });
+      if (planId.startsWith('extra_')) {
+        const credits = parseInt(planId.replace('extra_', ''), 10) || 0;
+        if (credits > 0) {
+          const { data, error } = await supabase.rpc('add_additional_credits', {
+            user_id: userId,
+            credits_to_add: credits,
+            secret_token: 'abacatepay_webhook_secret_token_2026'
+          });
 
-        if (error || !data) {
-          console.error('Erro ao adicionar créditos via RPC:', error);
-          return NextResponse.json({ error: 'Erro ao creditar saldo.' }, { status: 500 });
+          if (error || !data) {
+            console.error('Erro ao adicionar créditos via RPC:', error);
+            return NextResponse.json({ error: 'Erro ao creditar saldo.' }, { status: 500 });
+          }
+
+          console.log(`[AbacatePay Webhook] ${credits} créditos adicionados com sucesso para ${userId}`);
         }
-
-        console.log(`[AbacatePay Webhook] 50 créditos adicionados com sucesso para ${userId}`);
       } else {
         // Executa a função RPC segura no Supabase que ignora RLS usando a chave secreta
         const { data, error } = await supabase.rpc('update_user_plan_secure', {
