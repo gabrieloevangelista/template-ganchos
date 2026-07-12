@@ -326,7 +326,7 @@ export default function Home() {
     <div id="app">
       <div className="topbar">
         <div className="brand" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <img src="/logo.png" alt="Gerador de Ganchos" width={28} height={28} style={{ borderRadius: '6px' }} />
+          <img src="/logo.png" alt="Gerador de Ganchos" width={44} height={44} />
           <span className="brand-name">Gerador de Ganchos</span>
         </div>
 
