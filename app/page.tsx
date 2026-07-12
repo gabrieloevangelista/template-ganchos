@@ -325,8 +325,8 @@ export default function Home() {
   return (
     <div id="app">
       <div className="topbar">
-        <div className="brand">
-          <div className="brand-mark">G</div>
+        <div className="brand" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <img src="/logo.png" alt="Gerador de Ganchos" width={28} height={28} style={{ borderRadius: '6px' }} />
           <span className="brand-name">Gerador de Ganchos</span>
         </div>
 
@@ -534,9 +534,9 @@ export default function Home() {
       )}
 
       {step === 'login' && user && (
-        <div className="premium-card" style={{ maxWidth: '640px' }}>
+        <div className="premium-card" style={{ maxWidth: '720px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <div className="step-label">Configurações & Planos</div>
+            <div className="step-label">Painel de Controle & Planos</div>
             <button className="btn-secondary btn-sm" onClick={() => setStep('nicho')}>
               Voltar
             </button>
@@ -595,8 +595,10 @@ export default function Home() {
               
               {/* Bronze */}
               <div style={{
+                position: 'relative',
                 background: userPlan === 'plan_10' ? 'rgba(215, 161, 60, 0.05)' : '#ffffff',
                 border: userPlan === 'plan_10' ? '2px solid #d7a13c' : '1px solid rgba(0,0,0,0.08)',
+                boxShadow: userPlan === 'plan_10' ? '0 8px 24px rgba(215, 161, 60, 0.15)' : 'none',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'flex',
@@ -624,8 +626,10 @@ export default function Home() {
 
               {/* Prata */}
               <div style={{
+                position: 'relative',
                 background: userPlan === 'plan_50' ? 'rgba(215, 161, 60, 0.05)' : '#ffffff',
                 border: userPlan === 'plan_50' ? '2px solid #d7a13c' : '1px solid rgba(0,0,0,0.08)',
+                boxShadow: userPlan === 'plan_50' ? '0 8px 24px rgba(215, 161, 60, 0.15)' : 'none',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'flex',
@@ -653,8 +657,10 @@ export default function Home() {
 
               {/* Ouro */}
               <div style={{
+                position: 'relative',
                 background: userPlan === 'plan_unlimited' ? 'rgba(215, 161, 60, 0.05)' : '#ffffff',
                 border: userPlan === 'plan_unlimited' ? '2px solid #d7a13c' : '1px solid rgba(0,0,0,0.08)',
+                boxShadow: userPlan === 'plan_unlimited' ? '0 8px 24px rgba(215, 161, 60, 0.15)' : 'none',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'flex',
@@ -662,6 +668,11 @@ export default function Home() {
                 justifyContent: 'space-between',
                 height: '180px'
               }}>
+                {userPlan !== 'plan_unlimited' && (
+                  <div style={{ position: 'absolute', top: '-10px', right: '15px', background: '#d7a13c', color: '#fff', fontSize: '0.65rem', padding: '3px 8px', borderRadius: '12px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    Recomendado
+                  </div>
+                )}
                 <div>
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Ouro</h4>
                   <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 49,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
@@ -859,7 +870,7 @@ export default function Home() {
         <div className="step step-narrow">
           <div className="step-label">Passo 1 de 3</div>
           <h2>Qual o seu nicho de atuação?</h2>
-          <p className="step-desc">Seja específico — isso ajuda a adaptar os exemplos do template para a sua realidade.</p>
+          <p className="step-desc">Seja específico. Isso ajuda a adaptar os exemplos do template para a sua realidade.</p>
           <input
             type="text"
             className="field"
