@@ -562,7 +562,7 @@ export default function Home() {
                   fontSize: '0.95rem',
                   letterSpacing: '0.05em'
                 }}>
-                  {userPlan === 'plan_10' ? 'Bronze (10 usos)' : userPlan === 'plan_50' ? 'Prata (50 usos)' : userPlan === 'plan_unlimited' ? 'Ouro (200 usos)' : 'Gratuito (3 usos)'}
+                  {userPlan === 'plan_10' ? 'Bronze (50 usos)' : userPlan === 'plan_50' ? 'Prata (150 usos)' : userPlan === 'plan_unlimited' ? 'Ouro (300 usos)' : 'Gratuito (3 usos)'}
                 </strong>
               </div>
 
@@ -608,9 +608,9 @@ export default function Home() {
               }}>
                 <div>
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Bronze</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 19,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 12,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
                   <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
-                    <li>10 gerações</li>
+                    <li>50 gerações</li>
                     <li>Fins comerciais</li>
                   </ul>
                 </div>
@@ -639,9 +639,9 @@ export default function Home() {
               }}>
                 <div>
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Prata</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 39,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 29,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
                   <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
-                    <li>50 gerações</li>
+                    <li>150 gerações</li>
                     <li>Fins comerciais</li>
                   </ul>
                 </div>
@@ -677,7 +677,7 @@ export default function Home() {
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Ouro</h4>
                   <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 49,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
                   <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
-                    <li>200 gerações</li>
+                    <li>300 gerações</li>
                     <li>Suporte VIP</li>
                   </ul>
                 </div>
@@ -713,17 +713,17 @@ export default function Home() {
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.01)'
               }}>
                 <div>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +10 Gerações</h4>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +50 Gerações</h4>
                   <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#5c564c' }}>Uso adicional avulso</p>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                  <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 25,00</span>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 15,00</span>
                   <button
                     className="btn-primary btn-sm"
-                    onClick={() => handleSubscribe('extra_10')}
+                    onClick={() => handleSubscribe('extra_50')}
                     style={{ padding: '8px 16px', fontSize: '0.85rem' }}
                   >
-                    Comprar +10 usos
+                    Comprar +50 usos
                   </button>
                 </div>
               </div>
@@ -740,17 +740,17 @@ export default function Home() {
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.01)'
               }}>
                 <div>
-                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +50 Gerações</h4>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +150 Gerações</h4>
                   <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#5c564c' }}>Uso adicional (Melhor valor)</p>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                  <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 49,90</span>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 35,00</span>
                   <button
                     className="btn-primary btn-sm"
-                    onClick={() => handleSubscribe('extra_50')}
+                    onClick={() => handleSubscribe('extra_150')}
                     style={{ padding: '8px 16px', fontSize: '0.85rem', background: '#2c2925' }}
                   >
-                    Comprar +50 usos
+                    Comprar +150 usos
                   </button>
                 </div>
               </div>
