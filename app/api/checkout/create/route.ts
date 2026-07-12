@@ -95,21 +95,25 @@ export async function POST(req: Request) {
         'Authorization': `Bearer ${abacatepayKey}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        items: [
-          {
-            id: productId,
-            quantity: 1
+        body: JSON.stringify({
+          items: [
+            {
+              id: productId,
+              quantity: 1
+            }
+          ],
+          methods: ["PIX", "CARD"],
+          returnUrl: `${req.headers.get('origin') || 'http://localhost:3000'}/`,
+          completionUrl: `${req.headers.get('origin') || 'http://localhost:3000'}/`,
+          customer: {
+            name: user.user_metadata?.name || (user.email ? user.email.split('@')[0] : 'Usuário'),
+            email: user.email || ''
+          },
+          metadata: {
+            userId: user.id,
+            planId: planId
           }
-        ],
-        methods: ["PIX", "CARD"],
-        returnUrl: `${req.headers.get('origin') || 'http://localhost:3000'}/`,
-        completionUrl: `${req.headers.get('origin') || 'http://localhost:3000'}/`,
-        metadata: {
-          userId: user.id,
-          planId: planId
-        }
-      })
+        })
     });
 
     const checkoutData = await checkoutRes.json();

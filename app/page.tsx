@@ -340,16 +340,17 @@ export default function Home() {
             border: '1px solid rgba(215, 161, 60, 0.15)',
             padding: '4px 10px',
             borderRadius: '20px',
-            color: '#f3ece0'
+            color: '#1e1b18'
           }}>
             <span style={{ color: '#4caf50', fontSize: '0.6rem' }}>●</span>
-            <span style={{ maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={user.email}>{user.email}</span>
+            <span style={{ maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: '500' }} title={user.email}>{user.email}</span>
             <button 
               onClick={() => { setStep('history'); loadHistory(); }} 
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#d4af37',
+                color: '#1e1b18',
+                fontWeight: '600',
                 cursor: 'pointer',
                 padding: 0,
                 marginLeft: '4px',
@@ -364,7 +365,8 @@ export default function Home() {
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#d4af37',
+                color: '#1e1b18',
+                fontWeight: '600',
                 cursor: 'pointer',
                 padding: 0,
                 marginLeft: '4px',
@@ -380,7 +382,8 @@ export default function Home() {
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#a5731f',
+                color: '#1e1b18',
+                fontWeight: '600',
                 cursor: 'pointer',
                 padding: 0,
                 marginLeft: '4px',
@@ -459,6 +462,7 @@ export default function Home() {
                 value={authName}
                 onChange={(e) => setAuthName(e.target.value)}
                 placeholder="Seu nome"
+                autoComplete="name"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleAuthSubmit();
                 }}
@@ -471,6 +475,7 @@ export default function Home() {
               value={authEmail}
               onChange={(e) => setAuthEmail(e.target.value)}
               placeholder="Endereço de e-mail"
+              autoComplete="email"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleAuthSubmit();
               }}
@@ -483,6 +488,7 @@ export default function Home() {
                 value={authPassword}
                 onChange={(e) => setAuthPassword(e.target.value)}
                 placeholder="Sua senha (mínimo 6 caracteres)"
+                autoComplete={authTab === 'signup' ? 'new-password' : 'current-password'}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleAuthSubmit();
                 }}
@@ -534,38 +540,6 @@ export default function Home() {
             <button className="btn-secondary btn-sm" onClick={() => setStep('nicho')}>
               Voltar
             </button>
-          </div>
-
-          {/* Section 1: OpenAI Key */}
-          <div style={{ marginBottom: '30px', paddingBottom: '25px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-            <h3 style={{ color: '#1e1b18', marginBottom: '10px', fontSize: '1.1rem' }}>Conectar OpenAI API Key</h3>
-            <p className="step-desc" style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
-              Insira sua chave de API para usar seus próprios créditos. Se deixar em branco, usará a chave padrão do sistema.
-            </p>
-            {keyError && (
-              <div style={{ color: '#ff4444', marginBottom: '15px', fontSize: '0.85rem', background: 'rgba(255, 68, 68, 0.08)', padding: '8px 12px', borderRadius: '6px', border: '1px solid rgba(255, 68, 68, 0.2)' }}>
-                {keyError}
-              </div>
-            )}
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <input
-                type="password"
-                className="field"
-                value={tempOpenaiKey}
-                onChange={(e) => setTempOpenaiKey(e.target.value)}
-                placeholder="sk-... (Opcional - Chave Própria)"
-                style={{ flex: 1 }}
-              />
-              <button className="btn-primary" onClick={handleSaveKey} disabled={savingKey}>
-                {savingKey ? 'Salvando...' : 'Salvar'}
-              </button>
-            </div>
-            <div className="help-text" style={{ fontSize: '0.8rem', marginTop: '0.5rem', opacity: 0.7 }}>
-              Precisa de uma chave? Crie em{' '}
-              <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="help-link">
-                OpenAI API Keys
-              </a>
-            </div>
           </div>
 
           {/* Section 2: Active Plan & Stats */}
