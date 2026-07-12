@@ -7,9 +7,9 @@ export async function POST(req: Request) {
   const { planId } = body ?? {};
 
   const plans: Record<string, { name: string; price: number }> = {
-    plan_10: { name: 'Plano Bronze (50 usos)', price: 1290 },
-    plan_50: { name: 'Plano Prata (150 usos)', price: 2990 },
-    plan_unlimited: { name: 'Plano Ouro (300 usos)', price: 4990 },
+    plan_10: { name: 'Plano Bronze (100 usos)', price: 1990 },
+    plan_50: { name: 'Plano Prata (250 usos)', price: 3990 },
+    plan_unlimited: { name: 'Plano Ouro (500 usos)', price: 5990 },
     extra_50: { name: '50 Créditos Adicionais', price: 1500 },
     extra_150: { name: '150 Créditos Adicionais', price: 3500 }
   };

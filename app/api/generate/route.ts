@@ -144,14 +144,14 @@ export async function POST(req: Request) {
   let limit = 0;
   let planName = 'Gratuito';
   if (plan === 'silver' || plan === 'plan_10') {
-    limit = 50;
-    planName = 'Bronze (50 usos)';
+    limit = 100;
+    planName = 'Bronze (100 usos)';
   } else if (plan === 'gold' || plan === 'plan_50') {
-    limit = 150;
-    planName = 'Prata (150 usos)';
+    limit = 250;
+    planName = 'Prata (250 usos)';
   } else if (plan === 'unlimited' || plan === 'plan_unlimited' || plan === 'diamond') {
-    limit = 300;
-    planName = 'Ouro (300 usos)';
+    limit = 500;
+    planName = 'Ouro (500 usos)';
   }
 
   const totalAllowed = limit + additionalCredits;

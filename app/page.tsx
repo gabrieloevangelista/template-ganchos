@@ -573,7 +573,7 @@ export default function Home() {
                   fontSize: '0.95rem',
                   letterSpacing: '0.05em'
                 }}>
-                  {userPlan === 'plan_10' ? 'Bronze (50 usos)' : userPlan === 'plan_50' ? 'Prata (150 usos)' : userPlan === 'plan_unlimited' ? 'Ouro (300 usos)' : 'Gratuito (3 usos)'}
+                  {userPlan === 'plan_10' ? 'Bronze (100 usos)' : userPlan === 'plan_50' ? 'Prata (250 usos)' : userPlan === 'plan_unlimited' ? 'Ouro (500 usos)' : 'Gratuito (3 usos)'}
                 </strong>
               </div>
 
@@ -619,9 +619,9 @@ export default function Home() {
               }}>
                 <div>
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Bronze</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 12,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 19,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
                   <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
-                    <li>50 gerações</li>
+                    <li>100 gerações</li>
                     <li>Fins comerciais</li>
                   </ul>
                 </div>
@@ -650,9 +650,9 @@ export default function Home() {
               }}>
                 <div>
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Prata</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 29,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 39,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
                   <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
-                    <li>150 gerações</li>
+                    <li>250 gerações</li>
                     <li>Fins comerciais</li>
                   </ul>
                 </div>
@@ -686,9 +686,9 @@ export default function Home() {
                 )}
                 <div>
                   <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18' }}>Ouro</h4>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 49,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c', margin: '6px 0 4px' }}>R$ 59,90<span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#7d7567' }}>/mês</span></div>
                   <ul style={{ paddingLeft: '14px', margin: 0, fontSize: '0.75rem', color: '#5c564c', listStyleType: 'circle' }}>
-                    <li>300 gerações</li>
+                    <li>500 gerações</li>
                     <li>Suporte VIP</li>
                   </ul>
                 </div>
