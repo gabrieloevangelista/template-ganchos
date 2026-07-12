@@ -689,30 +689,59 @@ export default function Home() {
             <p className="step-desc" style={{ fontSize: '0.85rem', marginBottom: '15px' }}>
               Acabaram os usos do seu plano? Você pode comprar créditos extras que acumulam com o seu saldo e não expiram.
             </p>
-            <div style={{
-              background: '#ffffff',
-              border: '1px solid rgba(215, 161, 60, 0.2)',
-              borderRadius: '12px',
-              padding: '18px 20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '15px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.01)'
-            }}>
-              <div>
-                <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +50 Gerações</h4>
-                <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#5c564c' }}>Uso adicional avulso liberado de imediato</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div style={{
+                background: '#ffffff',
+                border: '1px solid rgba(215, 161, 60, 0.2)',
+                borderRadius: '12px',
+                padding: '18px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '15px',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.01)'
+              }}>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +10 Gerações</h4>
+                  <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#5c564c' }}>Uso adicional avulso</p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 25,00</span>
+                  <button
+                    className="btn-primary btn-sm"
+                    onClick={() => handleSubscribe('extra_10')}
+                    style={{ padding: '8px 16px', fontSize: '0.85rem' }}
+                  >
+                    Comprar +10 usos
+                  </button>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 15,00</span>
-                <button
-                  className="btn-primary btn-sm"
-                  onClick={() => handleSubscribe('extra_50')}
-                  style={{ padding: '8px 16px', fontSize: '0.85rem' }}
-                >
-                  Comprar +50 usos
-                </button>
+              
+              <div style={{
+                background: '#ffffff',
+                border: '1px solid rgba(215, 161, 60, 0.2)',
+                borderRadius: '12px',
+                padding: '18px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '15px',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.01)'
+              }}>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', color: '#1e1b18', fontWeight: '600' }}>Pacote +50 Gerações</h4>
+                  <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#5c564c' }}>Uso adicional (Melhor valor)</p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#d7a13c' }}>R$ 49,90</span>
+                  <button
+                    className="btn-primary btn-sm"
+                    onClick={() => handleSubscribe('extra_50')}
+                    style={{ padding: '8px 16px', fontSize: '0.85rem', background: '#2c2925' }}
+                  >
+                    Comprar +50 usos
+                  </button>
+                </div>
               </div>
             </div>
           </div>
